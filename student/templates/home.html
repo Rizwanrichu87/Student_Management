@@ -1,0 +1,425 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+
+<head>
+  <title>Student Management System</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <!-- Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body,
+    html {
+      height: 100%;
+      overflow-x: hidden;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    video.bg-video {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -2;
+    }
+
+    .center-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      min-height: 100%;
+      padding: 40px 20px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .card {
+      background-color: rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      padding: 40px 30px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: white;
+      text-align: center;
+      width: 100%;
+      max-width: 1000px;
+    }
+
+    h1 {
+      font-size: 3rem;
+      color: #e0ffff;
+      margin-bottom: 20px;
+      text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.6);
+    }
+
+    p {
+      font-size: 1.2rem;
+      color: lavender;
+      text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.6);
+    }
+
+    .btn-custom {
+      background-color: deepskyblue;
+      color: white;
+      border-radius: 25px;
+      padding: 10px 25px;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0, 191, 255, 0.3);
+      text-decoration: none;
+    }
+
+    .btn-custom:hover {
+      background-color: dodgerblue;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(30, 144, 255, 0.5);
+    }
+
+    .btn-danger:hover,
+    .btn-warning:hover {
+      background-color: rgb(0, 0, 0);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(127, 7, 7, 0.5);
+    }
+
+    table {
+      width: 100%;
+      margin-top: 30px;
+      border-collapse: collapse;
+      color: white;
+      background-color: rgba(0, 0, 0, 0.3);
+      border-radius: 15px;
+      overflow: hidden;
+    }
+
+    th,
+    td {
+      padding: 10px;
+      border: 1px solid rgba(89, 0, 255, 0.5) !important;
+      text-align: center;
+      vertical-align: middle !important;
+      color: white;
+    }
+
+    th {
+      background-color: rgba(46, 15, 77, 0.4);
+      color: #ffffff;
+      font-weight: bold;
+      text-shadow: 1px 1px 3px #000;
+    }
+
+    tbody tr:hover {
+      background-color: rgba(0, 191, 255, 0.2);
+      transition: background-color 0.3s ease;
+    }
+
+    td img {
+      max-height: 120px;
+      object-fit: cover;
+      border-radius: 8px;
+      border: 2px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .modal-content {
+      background-color: rgb(33, 0, 46) !important;
+      z-index: 1050 !important;
+    }
+
+    .modal-backdrop {
+      z-index: 1040 !important;
+      background-color: transparent !important;
+    }
+
+    .modal-backdrop.show {
+      background-color: transparent !important;
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+      opacity: 0 !important;
+    }
+
+
+
+
+    .modal {
+      z-index: 1050 !important;
+    }
+
+    body.modal-open {
+      overflow: auto !important;
+      padding-right: 0 !important;
+    }
+
+    .modal-body label {
+      font-weight: 600;
+      margin-bottom: 5px;
+      color: #333;
+    }
+
+    .form-control,
+    .form-control-file,
+    textarea {
+      border-radius: 12px;
+      border: 1px solid #ccc;
+      transition: 0.3s ease;
+      background-color: rgb(40, 4, 77);
+      color: white !important;
+    }
+
+    .form-control:focus,
+    textarea:focus {
+      border-color: deepskyblue;
+      box-shadow: 0 0 8px rgba(0, 191, 255, 0.4);
+      color: #000 !important;
+    }
+
+    /* Placeholder Text Color */
+    .form-control::placeholder,
+    textarea::placeholder {
+      color: #ccc !important;
+      /* light grey placeholder */
+      opacity: 1;
+      /* force visibility */
+    }
+
+    /* Make modal title more visible */
+    .modal-title {
+      color: #00bfff !important;
+      /* bright cyan */
+      font-weight: bold;
+    }
+
+    /* Make form labels in modal brighter */
+    .modal-body label {
+      color: #e0e0e0 !important;
+      /* light grey */
+      font-weight: 600;
+      text-shadow: 1px 1px 2px #000;
+    }
+
+    .modal-footer .btn-custom {
+      background: linear-gradient(to right, deepskyblue, dodgerblue);
+      border: none;
+      color: white;
+    }
+
+    .modal-footer .btn-custom:hover {
+      background: linear-gradient(to right, dodgerblue, deepskyblue);
+      transform: translateY(-1px);
+    }
+
+    input::placeholder {
+      color: #b0b0b0 !important;
+    }
+
+    input,
+    textarea {
+      color: #ffffff !important;
+    }
+
+    /* Popup Styles */
+    @keyframes fadeSlide {
+      0% {
+        opacity: 0;
+        transform: translateY(-30px);
+      }
+
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .popup-glass {
+      position: fixed;
+      top: 20%;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2000;
+      animation: fadeSlide 0.6s ease;
+    }
+
+    .popup-content {
+      background-color: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: white;
+      padding: 20px 30px;
+      border-radius: 15px;
+      text-align: center;
+      min-width: 300px;
+      max-width: 90vw;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+      position: relative;
+    }
+
+    .popup-close {
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      color: white;
+      font-size: 20px;
+      cursor: pointer;
+    }
+  </style>
+  <script>
+    $(document).ready(function () {
+      $('#addVehicleModal').on('show.bs.modal', function () {
+        $('body').css('padding-right', '0');
+      });
+
+      // Optional: Disable backdrop fade effect
+      $('#addVehicleModal').modal({
+        backdrop: false,
+        keyboard: true,
+        show: false
+      });
+    });
+    $(document).ready(function () {
+      $('.toast').toast('show');
+    });
+    function closePopup() {
+      var popup = document.getElementById("popup-message");
+      if (popup) {
+        popup.style.display = "none";
+      }
+    }
+  </script>
+
+</head>
+
+<body>
+
+  <!-- Video Background -->
+  <video autoplay muted loop playsinline class="bg-video">
+    <source src="{% static 'videos/mylivewallpapers-com-BMW-M4-City-Drive-4K.mp4' %}" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+
+  <!-- Main Card Content -->
+  <div class="center-container">
+    <div class="card">
+      <h1>Student Management System</h1>
+      <p>Django Mini Project</p>
+
+
+      <!-- Table Starts -->
+      <div class="table-responsive mt-4">
+        <table class="table table-bordered table-hover text-center">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Age</th>
+              <th>Course</th>
+              <th>Created At</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>{{ student.name }}</td>
+              <td>{{ student.email }}</td>
+              <td>{{ student.age }}</td>
+              <td>{{ student.course }}</td>
+              <td>{{ student.created_at }}</td>
+
+
+
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Button to Open Modal -->
+  
+      <a href="{% url 'login' %}" type="button" class="btn btn-custom mb-3">
+        👤 Logout
+      </a>
+      <button onclick="window.history.back()" class="btn btn-custom mb-1">
+        Back
+      </button>
+      <!-- Modal -->
+      <div class="modal" id="addVehicleModal" tabindex="-1" role="dialog" aria-labelledby="addVehicleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+          <div class="modal-content text-dark">
+            <div class="modal-header">
+              <h5 class="modal-title" id="addVehicleModalLabel">Add New Student</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="font-size: 1.5rem;">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+
+            <!-- Modal Body With Form -->
+            <form action="{% url 'add-student' %}" method="post">
+              {% csrf_token %}
+              <div class="modal-body">
+                <div class="form-row">
+                  <div class="form-group col-md-6">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" placeholder="Enter Student name"
+                      class="form-control shadow-sm" required>
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" placeholder="Enter Email" class="form-control shadow-sm"
+                      required>
+                  </div>
+                </div>
+
+                <div class="form-row">
+                  <div class="form-group col-md-6">
+                    <label for="age">Age</label>
+                    <input type="number" id="age" name="age" placeholder="Enter age" class="form-control shadow-sm"
+                      required>
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label for="course">Course</label>
+                    <input type="text" id="course" name="course" placeholder="Enter the course"
+                      class="form-control shadow-sm" required></input>
+                  </div>
+                </div>
+
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-custom" data-dismiss="modal">Cancel</button>
+                  <button type="submit" class="btn btn-custom">Submit Data</button>
+                </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      {% if messages %}
+      <div id="popup-message" class="popup-glass animate__animated animate__fadeInDown">
+        {% for message in messages %}
+        <div class="popup-content bg-{{ message.tags }}">
+          <span class="popup-close" onclick="closePopup()">&times;</span>
+          <strong>{{ message.tags|title }}:</strong> {{ message }}
+        </div>
+        {% endfor %}
+      </div>
+      {% endif %}
+
+    </div> <!-- End of .card -->
+  </div> <!-- End of .center-container -->
+
+</body>
+
+</html>
