@@ -63,7 +63,7 @@ def user_signup(request):
         user = User.objects.create_user(username=username, email=email, password=password1,first_name=first_name,last_name=last_name)
         user.save()
         messages.success(request, "Account created successfully! Please log in.")
-        return redirect('home0')
+        return redirect('login')
     return render(request, 'signup.html')
 
 def student_delete(request,pk):
