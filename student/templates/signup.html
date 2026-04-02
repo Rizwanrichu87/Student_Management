@@ -336,7 +336,10 @@
 
       </form>
 
-      {% if messages %}
+      </div> <!-- End of .card -->
+  </div> <!-- End of .center-container -->
+
+{% if messages %}
       <div id="popup-message" class="popup-glass animate__animated animate__fadeInDown">
         {% for message in messages %}
         <div class="popup-content bg-{{ message.tags }}">
@@ -349,9 +352,7 @@
 
 
 
-    </div> <!-- End of .card -->
-  </div> <!-- End of .center-container -->
-
+    
 </body>
 
 </html>
