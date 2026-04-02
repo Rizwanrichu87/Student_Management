@@ -322,30 +322,11 @@
       color: #777;
       border-color: #555;
     }
-  
-    /* Theme Toggle Overrides */
-    body.light-mode .card { background-color: rgba(255, 255, 255, 0.85); color: #1a1a1a; border: 1px solid #ccc; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1); }
-    body.light-mode h1 { color: #005580; text-shadow: none; }
-    body.light-mode p { color: #444; text-shadow: none; }
-    body.light-mode table { background-color: rgba(255, 255, 255, 0.9); color: #000; border: 1px solid #ddd; }
-    body.light-mode th { background-color: rgba(0, 0, 0, 0.05); color: #000; text-shadow: none; }
-    body.light-mode td { color: #000; }
-    body.light-mode .modal-content { background-color: #ffffff !important; border: 1px solid #ddd; }
-    body.light-mode .form-control, body.light-mode textarea { background-color: #fff; color: #000 !important; border: 1px solid #ccc; }
-    body.light-mode .modal-body label { color: #111 !important; text-shadow: none; }
-    body.light-mode .modal-title { color: #005580 !important; }
-    body.light-mode .popup-content { background-color: rgba(255,255,255,0.9); color: #000; }
 
   </style>
   <script>
 
-    function toggleTheme() {
-      document.body.classList.toggle('light-mode');
-      localStorage.setItem('theme', document.body.classList.contains('light-mode') ? 'light' : 'dark');
-    }
-    document.addEventListener("DOMContentLoaded", () => {
-      if(localStorage.getItem('theme') === 'light') document.body.classList.add('light-mode');
-    });
+    
 
     $(document).ready(function () {
       $('#addVehicleModal').on('show.bs.modal', function () {
@@ -381,7 +362,6 @@
   </video>
 
   <!-- Main Card Content -->
-  <button id="theme-toggle" class="btn btn-custom mb-3" style="position: fixed; top: 20px; right: 20px; z-index: 1000;" onclick="toggleTheme()">🌓 Toggle Mode</button>
   <div class="center-container">
     <div class="card">
       <h1>Student Management System</h1>
@@ -472,11 +452,14 @@
 
 
       <!-- Button to Open Modal -->
-      <button type="button" class="btn btn-custom mb-3" data-toggle="modal" data-target="#addVehicleModal">
-      <a href="{% url 'export_csv' %}" class="btn btn-warning mb-3">📥 Export to CSV</a>
-
-        ➕ Add Student
-      </button>
+      <div class="d-flex justify-content-center flex-wrap gap-2 mb-3" style="gap: 15px;">
+        <button type="button" class="btn btn-custom" data-toggle="modal" data-target="#addVehicleModal">
+          ➕ Add Student
+        </button>
+        <a href="{% url 'export_csv' %}" class="btn btn-custom">
+          📥 Export to CSV
+        </a>
+      </div>
       <a href="{% url 'login' %}" type="button" class="btn btn-custom mb-1">
         👤 Logout
       </a>
