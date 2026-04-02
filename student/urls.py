@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import index,index2,add_student,user_signup,student_delete,login_user,student_edit,index0
+from .views import index,index2,add_student,user_signup,student_delete,login_user,student_edit,index0,export_csv
 
 
 urlpatterns = [
@@ -10,7 +10,7 @@ urlpatterns = [
    path('delete-student/<int:pk>',student_delete,name='delete'),
    path('',login_user,name='login'),
    path('edit/<int:pk>',student_edit,name='edit'),
-   path('admin-dashboard/', index0, name='home0')
-
+   path('admin-dashboard/', index0, name='home0'),
+   path('export/', export_csv, name='export_csv')
     
 ]

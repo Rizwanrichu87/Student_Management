@@ -4,6 +4,9 @@ from django.contrib import messages
 from django.contrib.auth.models import User 
 from django.contrib.auth import authenticate,login
 from django.core.paginator import Paginator
+from django.db.models import Count
+from django.http import HttpResponse
+import csv
 # Create your views here.
 
 def index(request,pk):
@@ -113,9 +116,24 @@ def index0(request):
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
+    course_distribution = list(Student.objects.values('course').annotate(count=Count('course')))
     context = {
         'page_obj': page_obj,
         'student': page_obj.object_list,
-        'course_query': course_query  # pass it to template to keep input value
+        'course_query': course_query,  # pass it to template to keep input value
+        'course_distribution': course_distribution
     }
     return render(request, 'home0.html', context)
+
+def export_csv(request):
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="students.csv"'
+
+    writer = csv.writer(response)
+    writer.writerow(['ID', 'Name', 'Email', 'Age', 'Course', 'Added On'])
+
+    students = Student.objects.all().values_list('id', 'name', 'email', 'age', 'course', 'created_at')
+    for student in students:
+        writer.writerow(student)
+
+    return response
