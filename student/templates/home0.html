@@ -384,9 +384,10 @@
         <a href="{% url 'home0' %}" class="btn btn-custom ml-2">Reset</a>
         {% endif %}
       </form>
+      {{ course_distribution|json_script:"course-data" }}
       <script>
         document.addEventListener("DOMContentLoaded", function() {
-          const courseDistribution = {{ course_distribution|safe }};
+          const courseDistribution = JSON.parse(document.getElementById('course-data').textContent);
           const labels = courseDistribution.map(item => item.course);
           const data = courseDistribution.map(item => item.count);
           const ctx = document.getElementById('courseChart').getContext('2d');

@@ -9,6 +9,9 @@ A web-based Student Management System built using the Django framework. This app
 - **Filtering & Search:** Easily search for students based on their enrolled course.
 - **Pagination:** Structured rendering of lists showing up to 5 students per page.
 - **Role-based Redirection:** Automatically routes admin users to a dedicated dashboard (`home0`) and regular users to a standard view (`home2`).
+- **Dashboard Analytics:** Interactive dashboard charts (using Chart.js) to visualize student metrics and analytics.
+- **Student ID Card Generator:** Generate dynamic, viewable student ID cards.
+- **Data Export:** Easily export student records to CSV format.
 - **Relational Database:** Now uses **MySQL** as its backend database for enhanced reliability and performance.
 
 ## Prerequisites
